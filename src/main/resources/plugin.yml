@@ -1,0 +1,4 @@
+name: CustomGamemodes
+version: '1.0-SNAPSHOT'
+main: de.tjorven.customGamemodes.CustomGamemodes
+api-version: '1.21.8'
