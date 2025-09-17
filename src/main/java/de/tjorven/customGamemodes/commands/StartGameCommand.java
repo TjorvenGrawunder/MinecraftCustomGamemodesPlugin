@@ -33,6 +33,8 @@ public class StartGameCommand implements BasicCommand {
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] strings) {
 
+        if (GameStorage.getActiveGamemode() != null) GameStorage.getActiveGamemode().stop();
+
         if (strings.length == 0) {
             final Component broadcastMessage = MiniMessage.miniMessage().deserialize(
                     "<red>Please provide a game mode to start! Possible values are: <yellow>" +

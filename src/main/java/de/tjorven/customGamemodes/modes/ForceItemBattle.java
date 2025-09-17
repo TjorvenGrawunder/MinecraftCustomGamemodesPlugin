@@ -116,5 +116,7 @@ public class ForceItemBattle extends Gamemode {
         Bukkit.broadcast(broadcastMessage);
 
         TeamStorage.getInstance().clearTeams();
+
+        GameStorage.setActiveGamemode(null);
     }
 }
