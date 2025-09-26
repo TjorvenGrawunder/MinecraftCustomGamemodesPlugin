@@ -58,11 +58,22 @@ public class TeamStorage {
         return null;
     }
 
+    public Team getTeamByName(String name) {
+        for (Team team : teams) {
+            if (team.getName().equalsIgnoreCase(name)) {
+                return team;
+            }
+        }
+        return null;
+    }
+
     public void makeSinglePlayerTeams(List<Player> players) {
         clearTeams();
 
         for (Player player : players) {
-            Team team = new Team(List.of(player), player.getName());
+            List<Player> playerList = new ArrayList<>();
+            playerList.add(player);
+            Team team = new Team(playerList, player.getName());
             addTeam(team);
         }
     }

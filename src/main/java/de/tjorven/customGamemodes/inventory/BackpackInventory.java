@@ -1,4 +1,4 @@
-package de.tjorven.customGamemodes.utils;
+package de.tjorven.customGamemodes.inventory;
 
 import de.tjorven.customGamemodes.CustomGamemodes;
 import org.bukkit.inventory.Inventory;

@@ -7,7 +7,7 @@ import java.util.List;
 public class GamemodeParser {
     public static Gamemode parse(String input, long duration) {
         return switch (input.toLowerCase()) {
-            case "forceitembattle" -> new ForceItemBattle(CustomGamemodes.plugin, duration);
+            case "forceitembattle" -> new ForceItemBattle(duration);
             default -> null;
         };
     }

@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 
 import static de.tjorven.customGamemodes.modes.ForceItemBattleExclude.excludedItems;
 
-public class ForceItemBattle extends Gamemode {
+public class ForceItemBattle implements Gamemode {
     private CustomGamemodes plugin;
     private long duration; // in minutes
 
@@ -34,9 +34,13 @@ public class ForceItemBattle extends Gamemode {
 
     public static List<Material> possibleItems = Stream.of(Material.values()).toList();
 
-    public ForceItemBattle(CustomGamemodes plugin, long duration) {
-        super(plugin, duration);
-        this.plugin = plugin;
+    public ForceItemBattle(){
+        this.plugin = CustomGamemodes.plugin;
+        this.duration = this.plugin.getConfig().getLong("gameDuration");
+    }
+
+    public ForceItemBattle(long duration) {
+        this.plugin = CustomGamemodes.plugin;
         this.duration = duration;
     }
 
@@ -47,7 +51,7 @@ public class ForceItemBattle extends Gamemode {
 
     @Override
     public String getName() {
-        return "ForceItemBattle";
+        return "Force Item Battle";
     }
 
     @Override
@@ -56,7 +60,12 @@ public class ForceItemBattle extends Gamemode {
         Collection<? extends Player> players = Bukkit.getOnlinePlayers();
         // Give each team a random item
         Random rand = new Random();
-        possibleItems = possibleItems.stream().filter(item -> !ForceItemBattleExclude.excludedItems.contains(item) && !item.name().endsWith("_SPAWN_EGG")).collect(Collectors.toList());
+        possibleItems = possibleItems.stream().filter(item ->
+                !ForceItemBattleExclude.excludedItems.contains(item) &&
+                        !item.name().endsWith("_SPAWN_EGG") && !item.name().contains("CORAL") &&
+                        item.isItem() && !item.name().contains("PALE") && !item.name().contains("RESIN") &&
+                        !item.name().contains("OXIDIZED") && !item.name().contains("WEATHERED"))
+                .collect(Collectors.toList());
         if (TeamStorage.getInstance().isActive()){
             for (Team team : TeamStorage.getInstance().getTeams()) {
                 team.setItems(possibleItems.get(rand.nextInt(possibleItems.size())));
@@ -119,4 +128,11 @@ public class ForceItemBattle extends Gamemode {
 
         GameStorage.setActiveGamemode(null);
     }
+
+    @Override
+    public Material getIconMaterial() {
+        return Material.CHAIN;
+    }
+
+
 }
