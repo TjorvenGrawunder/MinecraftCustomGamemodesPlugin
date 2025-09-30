@@ -1,10 +1,12 @@
 package de.tjorven.customGamemodes.utils;
 
 import de.tjorven.customGamemodes.ui.ForceItemVisualizer;
+import lombok.Setter;
 import org.bukkit.Material;
 
 public class ForceItemItem {
     private final Material material;
+    @Setter
     private boolean skipped;
     private String time;
 
@@ -24,10 +26,6 @@ public class ForceItemItem {
 
     public String getTime() {
         return time;
-    }
-
-    public void setSkipped(boolean skipped) {
-        this.skipped = skipped;
     }
 
     public void setTime(long time) {

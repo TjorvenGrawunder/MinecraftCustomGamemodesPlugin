@@ -4,6 +4,7 @@ import de.tjorven.customGamemodes.CustomGamemodes;
 import de.tjorven.customGamemodes.ui.ForceItemVisualizer;
 import de.tjorven.customGamemodes.utils.GameStorage;
 import io.papermc.paper.util.Tick;
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
@@ -21,6 +22,7 @@ public class GameTimer {
     private long durationInMinutes;
     private BukkitScheduler scheduler;
     private boolean running;
+    @Getter
     private long remainingTime;
 
     public GameTimer(long durationInMinutes) {
@@ -61,7 +63,4 @@ public class GameTimer {
         }
     }
 
-    public long getRemainingTime() {
-        return remainingTime;
-    }
 }

@@ -5,6 +5,8 @@ import de.tjorven.customGamemodes.eventlistener.event.ItemRerollEvent;
 import de.tjorven.customGamemodes.exceptions.NoMoreSkipsException;
 import de.tjorven.customGamemodes.inventory.BackpackInventory;
 import de.tjorven.customGamemodes.ui.ForceItemVisualizer;
+import lombok.Getter;
+import lombok.Setter;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
@@ -21,11 +23,17 @@ import java.util.Random;
 import static de.tjorven.customGamemodes.modes.ForceItemBattle.possibleItems;
 
 public class Team {
+    @Getter
+    @Setter
     private BossBar bossBar;
+    @Getter
     private final List<Player> players;
+    @Getter
     private final List<ForceItemItem> items = new ArrayList<>();
+    @Getter
     private String name;
     private BackpackInventory backpack;
+    @Getter
     private int skipsLeft = 5;
 
     public Team(List<Player> players, String name) {
@@ -36,16 +44,8 @@ public class Team {
         System.out.println("Created team " + name + " with players: " + players);
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
     public Material getCurrentItem() {
         return items.getLast().getMaterial();
-    }
-
-    public List<ForceItemItem> getItems() {
-        return items;
     }
 
     public void setItems(Material nextItem) {
@@ -119,22 +119,10 @@ public class Team {
         return items.size() - 1;
     }
 
-    public String getName() {
-        return name;
-    }
-    public BossBar getBossBar() {
-        return bossBar;
-    }
-    public void setBossBar(BossBar bossBar) {
-        this.bossBar = bossBar;
-    }
     public Audience getAudience() {
         return Audience.audience(players);
     }
     public Inventory getBackpack() {
         return backpack.getInventory();
-    }
-    public int getSkipsLeft() {
-        return skipsLeft;
     }
 }
