@@ -55,8 +55,6 @@ public class ForceItemBattle implements Gamemode {
 
     @Override
     public void start() {
-        // List all players
-        Collection<? extends Player> players = Bukkit.getOnlinePlayers();
         // Give each team a random item
         Random rand = new Random();
         possibleItems = possibleItems.stream().filter(item ->
@@ -64,7 +62,7 @@ public class ForceItemBattle implements Gamemode {
                         !item.name().endsWith("_SPAWN_EGG") && !item.name().contains("CORAL") &&
                         item.isItem() && !item.name().contains("PALE") && !item.name().contains("RESIN") &&
                         !item.name().contains("OXIDIZED") && !item.name().contains("WEATHERED") &&
-                        !item.name().contains("POTTERY") && !item.name().contains("MUSIC"))
+                        !item.name().contains("POTTERY") && !item.name().contains("MUSIC") && !item.name().contains("COMMAND"))
                 .collect(Collectors.toList());
 
         for (Team team : TeamStorage.getInstance().getTeams()) {

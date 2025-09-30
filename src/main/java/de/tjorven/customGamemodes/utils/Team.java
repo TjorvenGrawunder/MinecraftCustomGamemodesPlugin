@@ -134,4 +134,7 @@ public class Team {
     public Inventory getBackpack() {
         return backpack.getInventory();
     }
+    public int getSkipsLeft() {
+        return skipsLeft;
+    }
 }

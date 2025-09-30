@@ -25,7 +25,7 @@ public class SkipCommand implements BasicCommand {
                     String name = team.getName();
                     Component component = MiniMessage.miniMessage().deserialize(
                             "<green>Team <yellow>" + name + " <green>has skipped <yellow>" +
-                                    returnItem.name() + "<green>!"
+                                    returnItem.name() + "<green>! \n <red>" + team.getSkipsLeft() + " skips left."
                     );
                     team.getAudience().sendMessage(component);
                     for (Player p : team.getPlayers()) {
