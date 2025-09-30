@@ -23,7 +23,7 @@ import static de.tjorven.customGamemodes.modes.ForceItemBattle.possibleItems;
 public class Team {
     private BossBar bossBar;
     private final List<Player> players;
-    private final List<Material> items = new ArrayList<>();
+    private final List<ForceItemItem> items = new ArrayList<>();
     private String name;
     private BackpackInventory backpack;
     private int skipsLeft = 5;
@@ -40,12 +40,18 @@ public class Team {
         return players;
     }
 
-    public Material getItems() {
-        return items.getLast();
+    public Material getCurrentItem() {
+        return items.getLast().getMaterial();
     }
+
+    public List<ForceItemItem> getItems() {
+        return items;
+    }
+
     public void setItems(Material nextItem) {
         ForceItemVisualizer.updateForceItem(this, nextItem);
-        items.add(nextItem);
+
+        items.add(new ForceItemItem(nextItem));
         for (Player player : players) {
             ItemRerollEvent event = new ItemRerollEvent(player, nextItem);
             event.callEvent();
@@ -53,9 +59,10 @@ public class Team {
     }
 
     public void updateItem(Material collectedItem) {
-        if (collectedItem == items.getLast()) {
+        if (collectedItem == items.getLast().getMaterial()) {
+            items.getLast().setTime(GameStorage.getActiveGamemode().getGameTimer().getRemainingTime());
             Component component = MiniMessage.miniMessage().deserialize(
-                    "<green>Team <yellow>" + name + " <green>has collected <yellow>" + items.getLast().name() + "<green>!"
+                    "<green>Team <yellow>" + name + " <green>has collected <yellow>" + items.getLast().getMaterial().name() + "<green>!"
             );
 
             for (Player player : players) {
@@ -87,9 +94,10 @@ public class Team {
 
     public Material rerollItem() {
         if (skipsLeft > 0) {
-            updateItem(items.getLast());
+            items.getLast().setSkipped(true);
+            updateItem(items.getLast().getMaterial());
             skipsLeft--;
-            return items.get(items.size() - 2);
+            return items.get(items.size() - 2).getMaterial();
         } else throw new NoMoreSkipsException("No skips left!");
     }
 
@@ -97,7 +105,7 @@ public class Team {
         if (players.contains(oldPlayer)) {
             int index = players.indexOf(oldPlayer);
             players.set(index, newPlayer);
-            ForceItemVisualizer.updateForceItem(this, items.getLast());
+            ForceItemVisualizer.updateForceItem(this, items.getLast().getMaterial());
             Component component = MiniMessage.miniMessage().deserialize(
                     "<yellow>" + oldPlayer.getName() + " <green>has been replaced by <yellow>" + newPlayer.getName() + "<green> in team <yellow>" + name + "<green>!"
             );

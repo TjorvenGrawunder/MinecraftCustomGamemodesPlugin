@@ -2,6 +2,8 @@ package de.tjorven.customGamemodes.modes;
 
 import com.google.common.collect.ImmutableList;
 import de.tjorven.customGamemodes.CustomGamemodes;
+import de.tjorven.customGamemodes.exceptions.RoundNotOverException;
+import de.tjorven.customGamemodes.timer.GameTimer;
 import de.tjorven.customGamemodes.ui.ForceItemVisualizer;
 import de.tjorven.customGamemodes.utils.GameStorage;
 import de.tjorven.customGamemodes.utils.Team;
@@ -16,9 +18,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.time.Duration;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -28,9 +28,8 @@ import static de.tjorven.customGamemodes.modes.ForceItemBattleExclude.excludedIt
 public class ForceItemBattle implements Gamemode {
     private CustomGamemodes plugin;
     private long duration; // in minutes
-
-    BukkitTask timerTask;
-    BukkitTask timerShutdownTask;
+    private GameTimer timer;
+    private List<Team> standings;
 
     public static List<Material> possibleItems = Stream.of(Material.values()).toList();
 
@@ -64,69 +63,48 @@ public class ForceItemBattle implements Gamemode {
                 !ForceItemBattleExclude.excludedItems.contains(item) &&
                         !item.name().endsWith("_SPAWN_EGG") && !item.name().contains("CORAL") &&
                         item.isItem() && !item.name().contains("PALE") && !item.name().contains("RESIN") &&
-                        !item.name().contains("OXIDIZED") && !item.name().contains("WEATHERED"))
+                        !item.name().contains("OXIDIZED") && !item.name().contains("WEATHERED") &&
+                        !item.name().contains("POTTERY") && !item.name().contains("MUSIC"))
                 .collect(Collectors.toList());
-        if (TeamStorage.getInstance().isActive()){
-            for (Team team : TeamStorage.getInstance().getTeams()) {
-                team.setItems(possibleItems.get(rand.nextInt(possibleItems.size())));
-            }
-        } else {
-            TeamStorage.getInstance().makeSinglePlayerTeams(ImmutableList.copyOf(players));
-            for (Team team : TeamStorage.getInstance().getTeams()) {
-                team.setItems(possibleItems.get(rand.nextInt(possibleItems.size())));
-            }
+
+        for (Team team : TeamStorage.getInstance().getTeams()) {
+            team.setItems(possibleItems.get(rand.nextInt(possibleItems.size())));
         }
 
-        BukkitScheduler scheduler = Bukkit.getScheduler();
-
-        long startTime = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
-
-        timerTask = scheduler.runTaskTimerAsynchronously(plugin, () -> {
-            long currentTime = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
-            long elapsedTime = currentTime - startTime;
-            long remainingTime = duration * 60 - elapsedTime;
-            ForceItemVisualizer.updateTimer(remainingTime);
-        }, 0, Tick.tick().fromDuration(Duration.ofSeconds(1)));
-
-        timerShutdownTask = scheduler.runTaskLater(plugin, () -> {
-            timerTask.cancel();
-            final Component endMessage = MiniMessage.miniMessage().deserialize(
-                    "<red>The game mode <yellow>" + this.getName() + " <red>has ended!"
-            );
-            Bukkit.broadcast(endMessage);
-            GameStorage.removeGamemode(this);
-            GameStorage.setActiveGamemode(null);
-            this.stop();
-        }, Tick.tick().fromDuration(Duration.ofMinutes(duration)));
+        timer = new GameTimer(duration);
+        timer.start();
 
     }
 
     @Override
     public void stop() {
-        if (!timerTask.isCancelled()){
-            timerTask.cancel();
-            timerShutdownTask.cancel();
+        if (timer != null) {
+            timer.stop();
         }
 
         ForceItemVisualizer.stopRound();
 
-        Team winningTeam = null;
-        int highestScore = -1;
-        for (Team team : TeamStorage.getInstance().getTeams()) {
-            if (highestScore < team.roundsCompleted()) {
-                highestScore = team.roundsCompleted();
-                winningTeam = team;
-            }
-        }
+        // Sort teams by lowest rounds completed to highest
+        standings = TeamStorage.getInstance().getTeams().stream()
+                .sorted(Comparator.comparingInt(Team::roundsCompleted).reversed())
+                .collect(Collectors.toList());
+
         final Component broadcastMessage = MiniMessage.miniMessage().deserialize(
-                "<green>Winning Team is <yellow> <green> " + winningTeam.getName() + " <green> with <yellow> " + highestScore + " <green> rounds completed!"
+                "<green>Round is over! Teleporting players to spawn..."
         );
 
         Bukkit.broadcast(broadcastMessage);
 
-        TeamStorage.getInstance().clearTeams();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.teleport(Bukkit.getWorlds().getFirst().getSpawnLocation());
+        }
+    }
 
+    @Override
+    public void shutdown() {
         GameStorage.setActiveGamemode(null);
+        GameStorage.getGamemodes().remove(this);
+        TeamStorage.getInstance().clearTeams();
     }
 
     @Override
@@ -134,5 +112,17 @@ public class ForceItemBattle implements Gamemode {
         return Material.CHAIN;
     }
 
+    @Override
+    public GameTimer getGameTimer() {
+        return timer;
+    }
+
+    @Override
+    public List<Team> getStandings() throws RoundNotOverException {
+        if (standings == null) {
+            throw new RoundNotOverException("Round is not over yet!");
+        }
+        return standings;
+    }
 
 }

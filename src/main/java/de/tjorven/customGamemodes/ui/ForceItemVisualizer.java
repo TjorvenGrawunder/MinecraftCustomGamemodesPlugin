@@ -14,6 +14,7 @@ import net.kyori.adventure.text.format.ShadowColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.title.Title;
 import net.kyori.adventure.translation.TranslationStore;
 import net.kyori.adventure.util.ARGBLike;
 import net.md_5.bungee.api.ChatMessageType;
@@ -22,14 +23,40 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.text.MessageFormat;
+import java.util.logging.Level;
+
+import static de.tjorven.customGamemodes.CustomGamemodes.plugin;
 
 public class ForceItemVisualizer {
+
+    public static void startCountdown(int duration, Runnable onFinish) {
+        int totalTicks = duration * 20; // Dauer in Ticks
+        for (int i = 0; i <= duration; i++) {
+            int remaining = duration - i;
+            int delayTicks = i * 20;
+
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                for (Team team : TeamStorage.getInstance().getTeams()) {
+                    Audience audience = team.getAudience();
+                    audience.showTitle(Title.title(
+                            Component.text(remaining).color(TextColor.color(82, 5, 123)),
+                            Component.text("")
+                    ));
+                }
+
+                // Am Ende des Countdowns Callback ausführen
+                if (remaining == 0) {
+                    onFinish.run();
+                }
+
+            }, delayTicks);
+        }
+    }
+
+
     public static void updateTimer(long remainingTime) {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            int hours = (int) (remainingTime / 3600);
-            int minutes = (int) ((remainingTime % 3600) / 60);
-            int seconds = (int) (remainingTime % 60);
-            String remainingTimeFormatted = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+            String remainingTimeFormatted = ForceItemVisualizer.getFormattedTime(remainingTime);
             Component actionBar = Component.text(remainingTimeFormatted).color(TextColor.color(124, 255, 0))
                     .shadowColor(ShadowColor.shadowColor(124, 194, 0, 128)).decorate(TextDecoration.BOLD);
             player.sendActionBar(actionBar);
@@ -69,5 +96,12 @@ public class ForceItemVisualizer {
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendActionBar(Component.text(""));
         }
+    }
+
+    public static String getFormattedTime(long remainingTime) {
+        int hours = (int) (remainingTime / 3600);
+        int minutes = (int) ((remainingTime % 3600) / 60);
+        int seconds = (int) (remainingTime % 60);
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 }

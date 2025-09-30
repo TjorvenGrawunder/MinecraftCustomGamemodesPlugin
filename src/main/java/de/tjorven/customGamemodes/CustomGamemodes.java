@@ -55,6 +55,8 @@ public final class CustomGamemodes extends JavaPlugin {
         registerCommand("adminskip", adminSkipCommand);
         SetGameDurationCommand setGameDurationCommand = new SetGameDurationCommand();
         registerCommand("setgametime", setGameDurationCommand);
+        ResultsCommand resultsCommand = new ResultsCommand();
+        registerCommand("results", resultsCommand);
     }
 
     private void registerGameModes(){

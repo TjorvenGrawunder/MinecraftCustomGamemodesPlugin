@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TeamStorage {
     private static TeamStorage instance;
-    private List<Team> teams = new ArrayList<Team>();
+    private List<Team> teams = new ArrayList<>();
     private boolean isActive = false;
 
     private TeamStorage() {

@@ -5,7 +5,6 @@ import de.tjorven.customGamemodes.utils.GameStorage;
 import de.tjorven.customGamemodes.utils.Team;
 import de.tjorven.customGamemodes.utils.TeamStorage;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,9 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
 public class CheckForceItemListener implements Listener {
 
@@ -36,7 +32,7 @@ public class CheckForceItemListener implements Listener {
 
         Player player = (Player) e.getWhoClicked();
         Team team = TeamStorage.getInstance().getTeam(player);
-        Material needItem = team.getItems();
+        Material needItem = team.getCurrentItem();
         if (player.getInventory().contains(needItem)) {
             team.updateItem(needItem);
         }
@@ -48,7 +44,7 @@ public class CheckForceItemListener implements Listener {
 
         Player player = (Player) e.getWhoClicked();
         Team team = TeamStorage.getInstance().getTeam(player);
-        Material needItem = team.getItems();
+        Material needItem = team.getCurrentItem();
         if (e.getCurrentItem() == null) return;
         if (e.getCurrentItem().getType().equals(needItem)) {
             team.updateItem(needItem);
@@ -61,7 +57,7 @@ public class CheckForceItemListener implements Listener {
 
         Player player = (Player) e.getEntity();
         Team team = TeamStorage.getInstance().getTeam(player);
-        Material needItem = team.getItems();
+        Material needItem = team.getCurrentItem();
         if (player.getInventory().contains(needItem)) {
             team.updateItem(needItem);
         }
@@ -71,6 +67,7 @@ public class CheckForceItemListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         Team team = TeamStorage.getInstance().getTeam(player);
+        if (team == null) return;
         for (Player p : team.getPlayers()) {
             if (p.getUniqueId().equals(player.getUniqueId()) && p != player) {
                 team.replacePlayer(p, player);
