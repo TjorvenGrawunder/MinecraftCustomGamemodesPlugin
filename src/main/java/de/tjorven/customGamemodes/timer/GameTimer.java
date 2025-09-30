@@ -44,8 +44,6 @@ public class GameTimer {
             );
             Bukkit.broadcast(broadcastMessage);
             GameStorage.getActiveGamemode().stop();
-            GameStorage.removeGamemode(GameStorage.getActiveGamemode());
-            GameStorage.setActiveGamemode(null);
         }, Tick.tick().fromDuration(Duration.ofMinutes(durationInMinutes)));
 
         running = true;

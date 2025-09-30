@@ -36,6 +36,9 @@ public class ResultsCommand implements BasicCommand {
 
             resultsInventory.showResults(last.getItems());
             standings.remove(last);
+            if (standings.isEmpty()) {
+                GameStorage.getActiveGamemode().shutdown();
+            }
         } catch (RoundNotOverException e) {
             Component component = MiniMessage.miniMessage().deserialize(
                     "<red>" + e.getMessage()
