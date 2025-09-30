@@ -36,13 +36,6 @@ public class ForceItemBattleExclude {
             // Command-Items
             Material.KNOWLEDGE_BOOK,
 
-            // Nicht craftbare Schallplatten (Beispiele)
-            Material.MUSIC_DISC_5,
-            Material.MUSIC_DISC_11,
-            Material.MUSIC_DISC_PIGSTEP,
-            Material.MUSIC_DISC_OTHERSIDE,
-            Material.MUSIC_DISC_RELIC,
-
             // Silktouch-only items
             Material.AMETHYST_CLUSTER,
             Material.BUDDING_AMETHYST,
@@ -62,6 +55,8 @@ public class ForceItemBattleExclude {
             Material.DEEPSLATE_REDSTONE_ORE,
             Material.NETHER_QUARTZ_ORE,
             Material.NETHER_GOLD_ORE,
+            Material.COAL_ORE,
+            Material.DEEPSLATE_COAL_ORE,
             Material.BEE_NEST,
             Material.ICE,
             Material.BLUE_ICE,
