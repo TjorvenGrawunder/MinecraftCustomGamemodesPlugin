@@ -28,9 +28,6 @@ public class SkipCommand implements BasicCommand {
                                     returnItem.name() + "<green>! \n <red>" + team.getSkipsLeft() + " skips left."
                     );
                     team.getAudience().sendMessage(component);
-                    for (Player p : team.getPlayers()) {
-                        System.out.println(p == player);
-                    }
                 } catch (NoMoreSkipsException e) {
                     Component component = MiniMessage.miniMessage().deserialize(
                             "<red>You have no skips left!"

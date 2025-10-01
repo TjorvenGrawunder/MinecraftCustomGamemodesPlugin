@@ -19,6 +19,7 @@ import org.bukkit.inventory.Inventory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
 
 import static de.tjorven.customGamemodes.modes.ForceItemBattle.possibleItems;
 
@@ -41,7 +42,7 @@ public class Team {
         skipsLeft = skipsLeft * players.size();
         this.name = name;
         this.backpack = new BackpackInventory(CustomGamemodes.plugin);
-        System.out.println("Created team " + name + " with players: " + players);
+        CustomGamemodes.plugin.getLogger().log(Level.INFO, "Created team " + name + " with players: " + players);
     }
 
     public Material getCurrentItem() {

@@ -61,7 +61,6 @@ public class GameMenuListener implements Listener {
 
                 p.closeInventory();
             } else if (plainName.contains("Exit Menu")) {
-                System.out.println("Closing menu for " + p.getName());
                 p.closeInventory();
             }
         }

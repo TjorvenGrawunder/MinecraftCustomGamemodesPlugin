@@ -14,6 +14,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -66,6 +67,8 @@ public class ForceItemBattle implements Gamemode {
                 .collect(Collectors.toList());
 
         for (Team team : TeamStorage.getInstance().getTeams()) {
+            ItemStack skipBarriers = new ItemStack(Material.BARRIER, team.getSkipsLeft());
+            team.getBackpack().addItem(skipBarriers);
             team.setItems(possibleItems.get(rand.nextInt(possibleItems.size())));
         }
 
@@ -103,6 +106,11 @@ public class ForceItemBattle implements Gamemode {
         GameStorage.setActiveGamemode(null);
         GameStorage.getGamemodes().remove(this);
         TeamStorage.getInstance().clearTeams();
+    }
+
+    @Override
+    public boolean hasSkips() {
+        return true;
     }
 
     @Override

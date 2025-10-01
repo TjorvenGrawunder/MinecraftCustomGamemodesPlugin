@@ -14,6 +14,7 @@ public class ItemRerollEvent extends EntityEvent {
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private Material item;
+    boolean giveItemToPlayer = false;
 
     public ItemRerollEvent(@NotNull Entity entity, Material newItem) {
         super(entity);

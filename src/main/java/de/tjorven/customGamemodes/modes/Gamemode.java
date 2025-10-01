@@ -19,4 +19,5 @@ public interface Gamemode {
     List<Team> getStandings() throws RoundNotOverException;
     // Will deactivate the gamemode and clear all data
     void shutdown();
+    boolean hasSkips();
 }
