@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collection;
+import java.util.List;
 
 public class AdminSkipCommand implements BasicCommand {
     @Override
@@ -52,6 +53,6 @@ public class AdminSkipCommand implements BasicCommand {
     @Override
     public Collection<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
         String[] teamNames = TeamStorage.getInstance().getTeams().stream().map(Team::getName).toArray(String[]::new);
-        return BasicCommand.super.suggest(commandSourceStack, teamNames);
+        return List.of(teamNames);
     }
 }
