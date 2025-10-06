@@ -57,6 +57,10 @@ public final class CustomGamemodes extends JavaPlugin {
         registerCommand("setgametime", setGameDurationCommand);
         ResultsCommand resultsCommand = new ResultsCommand();
         registerCommand("results", resultsCommand);
+        CreateWorldCommand createWorldCommand = new CreateWorldCommand();
+        registerCommand("createworld", createWorldCommand);
+        JoinWorldCommand joinWorldCommand = new JoinWorldCommand();
+        registerCommand("joinworld", joinWorldCommand);
     }
 
     private void registerGameModes(){
