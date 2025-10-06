@@ -11,20 +11,10 @@ import java.util.List;
 @Getter
 public class WorldGroup {
 
-    private static class NetherPortalLink{
-        public Location netherLocation;
-        public Location overworldLocation;
-        public NetherPortalLink(Location netherLocation, Location overworldLocation){
-            this.netherLocation = netherLocation;
-            this.overworldLocation = overworldLocation;
-        }
-    }
-
     private final World overworld;
     private final World nether;
     private final World end;
 
-    private List<NetherPortalLink> links;
 
     public WorldGroup(World overworld, World nether, World end) {
         this.overworld = overworld;
@@ -36,28 +26,6 @@ public class WorldGroup {
         deleteWorld(overworld);
         deleteWorld(nether);
         deleteWorld(end);
-    }
-
-    public void addNetherPortalLink(Location netherLocation, Location overworldLocation){
-        links.add(new NetherPortalLink(netherLocation, overworldLocation));
-    }
-
-    public Location getNetherLocation(Location overworldLocation){
-        for (NetherPortalLink link : links) {
-            if (link.overworldLocation.equals(overworldLocation)) {
-                return link.netherLocation;
-            }
-        }
-        return null;
-    }
-
-    public Location getOverworldLocation(Location netherLocation){
-        for (NetherPortalLink link : links) {
-            if (link.netherLocation.equals(netherLocation)) {
-                return link.overworldLocation;
-            }
-        }
-        return null;
     }
 
     private void deleteWorld(World world) {
