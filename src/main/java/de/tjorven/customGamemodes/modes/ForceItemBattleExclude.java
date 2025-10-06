@@ -85,7 +85,8 @@ public class ForceItemBattleExclude {
             Material.SCULK_VEIN,
             Material.SCULK_SHRIEKER,
             Material.TURTLE_EGG,
-            Material.SNOW
+            Material.SNOW,
+            Material.REINFORCED_DEEPSLATE
 
     );
 }

@@ -1,6 +1,7 @@
 package de.tjorven.customGamemodes.commands;
 
 import de.tjorven.customGamemodes.exceptions.NoMoreSkipsException;
+import de.tjorven.customGamemodes.utils.SuggestionTools;
 import de.tjorven.customGamemodes.utils.Team;
 import de.tjorven.customGamemodes.utils.TeamStorage;
 import io.papermc.paper.command.brigadier.BasicCommand;
@@ -13,8 +14,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AdminSkipCommand implements BasicCommand {
     @Override
@@ -52,7 +55,9 @@ public class AdminSkipCommand implements BasicCommand {
 
     @Override
     public Collection<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
-        String[] teamNames = TeamStorage.getInstance().getTeams().stream().map(Team::getName).toArray(String[]::new);
-        return List.of(teamNames);
+        List<String> teamNames = TeamStorage.getInstance().getTeams().stream().map(Team::getName).toList();
+        if (args.length > 1) return List.of();
+        if (args.length == 0) {return teamNames;}
+        return SuggestionTools.generateCollectionSearchSuggestions(teamNames, args[0]);
     }
 }

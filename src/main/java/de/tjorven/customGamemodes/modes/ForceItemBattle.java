@@ -63,7 +63,8 @@ public class ForceItemBattle implements Gamemode {
                         !item.name().endsWith("_SPAWN_EGG") && !item.name().contains("CORAL") &&
                         item.isItem() && !item.name().contains("PALE") && !item.name().contains("RESIN") &&
                         !item.name().contains("OXIDIZED") && !item.name().contains("WEATHERED") &&
-                        !item.name().contains("POTTERY") && !item.name().contains("MUSIC") && !item.name().contains("COMMAND"))
+                        !item.name().contains("POTTERY") && !item.name().contains("MUSIC") && !item.name().contains("COMMAND") &&
+                        !item.name().contains("EXPOSED") && !item.name().contains("WAXED"))
                 .collect(Collectors.toList());
 
         for (Team team : TeamStorage.getInstance().getTeams()) {
