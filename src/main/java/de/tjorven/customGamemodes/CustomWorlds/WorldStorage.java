@@ -30,4 +30,12 @@ public class WorldStorage {
     public static void deleteAllWorlds(){
         worldGroups.forEach((k,v) -> v.deleteAllWorlds());
     }
+
+    public static void deleteWorld(String name){
+        WorldGroup group = worldGroups.get(name);
+        if(group != null){
+            group.deleteAllWorlds();
+            worldGroups.remove(name);
+        }
+    }
 }

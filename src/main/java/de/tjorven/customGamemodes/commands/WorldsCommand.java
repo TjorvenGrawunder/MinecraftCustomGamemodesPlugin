@@ -99,5 +99,6 @@ public class WorldsCommand implements CommandExecutor, TabCompleter {
     }
 
     private void deleteWorld(CommandSender sender, String[] args) {
+        WorldStorage.deleteWorld(args[0]);
     }
 }
