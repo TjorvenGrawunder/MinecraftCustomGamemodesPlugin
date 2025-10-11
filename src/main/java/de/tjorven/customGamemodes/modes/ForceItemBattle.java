@@ -59,12 +59,13 @@ public class ForceItemBattle implements Gamemode {
         // Give each team a random item
         Random rand = new Random();
         possibleItems = possibleItems.stream().filter(item ->
-                !ForceItemBattleExclude.excludedItems.contains(item) &&
+                !ForceItemBattleExclude.excludedItems.contains(item) && !ForceItemBattleExclude.chestExclusiveItems.contains(item) &&
+                        !ForceItemBattleExclude.endExclusiveItems.contains(item) &&
                         !item.name().endsWith("_SPAWN_EGG") && !item.name().contains("CORAL") &&
                         item.isItem() && !item.name().contains("PALE") && !item.name().contains("RESIN") &&
                         !item.name().contains("OXIDIZED") && !item.name().contains("WEATHERED") &&
                         !item.name().contains("POTTERY") && !item.name().contains("MUSIC") && !item.name().contains("COMMAND") &&
-                        !item.name().contains("EXPOSED") && !item.name().contains("WAXED"))
+                        !item.name().contains("EXPOSED") && !item.name().contains("WAXED") && !item.name().contains("TRIM"))
                 .collect(Collectors.toList());
 
         for (Team team : TeamStorage.getInstance().getTeams()) {

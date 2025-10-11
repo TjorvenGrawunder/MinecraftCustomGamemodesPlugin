@@ -1,6 +1,7 @@
 package de.tjorven.customGamemodes.inventory;
 
 import de.tjorven.customGamemodes.utils.ForceItemItem;
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -19,7 +20,8 @@ import static de.tjorven.customGamemodes.CustomGamemodes.plugin;
 
 public class ResultsInventory implements InventoryHolder {
     private final List<Inventory> resultInventoryList = new ArrayList<>();
-    private final String teamName;
+    @Getter private final String teamName;
+    private int score = 0;
 
     public ResultsInventory(String name) {
         this.teamName = name;
@@ -51,8 +53,9 @@ public class ResultsInventory implements InventoryHolder {
 
     public void addItemToResults(ItemStack item) {
         Inventory inv = resultInventoryList.getLast();
-        if (inv.firstEmpty() != -1) {
-                int nextEmpty = inv.firstEmpty();
+        score++;
+        if (getNextFreeSlot(inv) != -1) {
+                int nextEmpty = getNextFreeSlot(inv);
 
                 if (nextEmpty % 9 == 7) {
                     nextEmpty += 2;
@@ -86,6 +89,16 @@ public class ResultsInventory implements InventoryHolder {
         resultInventoryList.add(newInv);
     }
 
+    private int getNextFreeSlot(Inventory inv) {
+        for (int i = 0; i < inv.getSize(); i++) {
+            if (i % 9 == 7 || i % 9 == 8) continue; // Spalten 7 & 8 überspringen
+            if (inv.getItem(i) == null || inv.getItem(i).getType() == Material.AIR) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     @Override
     public @NotNull Inventory getInventory() {
         return resultInventoryList.getFirst();
@@ -101,6 +114,10 @@ public class ResultsInventory implements InventoryHolder {
 
     public Inventory getInventoryAt(int index) {
         return resultInventoryList.get(index);
+    }
+
+    public int getScore() {
+        return score - 1;
     }
 
 }

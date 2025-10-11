@@ -24,7 +24,7 @@ import static de.tjorven.customGamemodes.CustomGamemodes.plugin;
 public class WorldEventListener implements Listener {
 
     public static class ThreeDimensionalBlockIterator implements Iterator<Location> {
-        private Location current;
+        private final Location current;
         private final int maxX;
         private final int maxY;
         private final int maxZ;
@@ -87,24 +87,13 @@ public class WorldEventListener implements Listener {
     }
 
     private static Location ConvertCoords(Location loc, World targetWorld) {
-        // Fehlt nicht multiplikation/divison mit 8?
         Location targetLocation = new Location(targetWorld, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
         int searchRadius;
-        // Radius ist nicht 33 Blöcke, bzw 17 Chunks, sondern das ist der Durchmesser.
-        // Du suchst also einen Bereich der 4x so groß ist.
         if (targetWorld.getEnvironment() == World.Environment.NETHER) {
-            // Sind 33 Blöcke nicht 3 chunks
-            // > If going to the Nether it searches a 33×33 block area (centered on the "ideal" coordinates).
             searchRadius = 3 * 16 / 2; // 3 chunks in Nether
         } else {
             searchRadius = 17 * 16 / 2; // 17 chunks in Overworld
         }
-        // Laut Wiki nimmt Minecraft das euklidisch nächste Portal von allen gefundenen, also nicht nur eins.
-        // Zusätzlich suchst du X -> Y -> Z (Reihenfolge der for schleifen in `searchForPortal`)
-        // Wegen "For any column of portal blocks (such as the two 3-high columns of a "standard" portal), only the bottom one is considered."
-        // sucht Minecraft selber wahrscheinlich "X -> Z -> Y", also jede "Blockspalte" nacheinander.
-        // Auch: "In either dimension, the entire vertical range of the world is scanned."
-        // Du suchst auch bei Y nur mit searchRadius.
 
         ThreeDimensionalBlockIterator iterator = new ThreeDimensionalBlockIterator(targetWorld,
                 targetLocation.getBlockX() - searchRadius, targetWorld.getMinHeight(), targetLocation.getBlockZ() - searchRadius,
@@ -156,14 +145,13 @@ public class WorldEventListener implements Listener {
         Location portalLoc = searchForPortalSpace(x, y, z, world, searchRadius, maxHeight, minHeight, 3, 4);
 
         if (portalLoc == null) {
-            System.out.println("Could not find suitable portal location with 3x4 area, trying 1x4 area");
             portalLoc = searchForPortalSpace(x, y, z, world, searchRadius, maxHeight, minHeight, 1, 4);
         }
 
         if (portalLoc == null) {
-            System.out.println("Could not find suitable portal location with 1x4 area, using fallback");
             // Fallback: Just use the original location, but clamp y to valid range
             portalLoc = new Location(world, x, Math.min(maxHeight - 60, maxHeight), z);
+            genAirBulb(portalLoc, 1, 1, 1, 2, 4, 1);
         }
 
         // Create a simple 4x5 Nether Portal frame
@@ -171,6 +159,8 @@ public class WorldEventListener implements Listener {
             for (int dy = 0; dy <= 4; dy++) {
                 if (dx == -1 || dy == 0 || dx == 2 || dy == 4) {
                     world.getBlockAt(portalLoc.getBlockX() + dx, portalLoc.getBlockY() + dy, portalLoc.getBlockZ()).setType(Material.OBSIDIAN);
+                } else {
+                    world.getBlockAt(portalLoc.getBlockX() + dx, portalLoc.getBlockY() + dy, portalLoc.getBlockZ()).setType(Material.AIR);
                 }
             }
         }
@@ -230,5 +220,24 @@ public class WorldEventListener implements Listener {
             }
         }
         return null;
+    }
+
+    private static void genAirBulb(Location loc, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
+        World world = loc.getWorld();
+        int centerX = loc.getBlockX();
+        int centerY = loc.getBlockY();
+        int centerZ = loc.getBlockZ();
+
+        ThreeDimensionalBlockIterator iterator = new ThreeDimensionalBlockIterator(world,
+                centerX - minX, centerY - minY, centerZ - minZ,
+                centerX + maxX, centerY + maxY, centerZ + maxZ);
+
+        StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED), false)
+                .forEach(l -> {
+                    Block block = l.getBlock();
+                    if (!block.getType().isAir()) {
+                        block.setType(Material.AIR);
+                    }
+                });
     }
 }

@@ -3,13 +3,12 @@ package de.tjorven.customGamemodes;
 import de.tjorven.customGamemodes.CustomWorlds.WorldStorage;
 import de.tjorven.customGamemodes.commands.*;
 import de.tjorven.customGamemodes.eventlistener.CheckForceItemListener;
-import de.tjorven.customGamemodes.eventlistener.GameMenuListener;
+import de.tjorven.customGamemodes.eventlistener.InventoryListener;
 import de.tjorven.customGamemodes.eventlistener.WorldEventListener;
 import de.tjorven.customGamemodes.modes.ForceItemBattle;
 import de.tjorven.customGamemodes.modes.GameModeRegistry;
 import de.tjorven.customGamemodes.ui.FontMappings;
 import io.papermc.paper.command.brigadier.BasicCommand;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -45,6 +44,9 @@ public final class CustomGamemodes extends JavaPlugin {
     }
 
     private void registerCommands() {
+        WorldsCommand worldsCommand = new WorldsCommand();
+        getCommand("worlds").setExecutor(worldsCommand);
+        getCommand("worlds").setTabCompleter(worldsCommand);
         BasicCommand openGameMenuCommand = new OpenGameMenuCommand();
         registerCommand("gamemenu", openGameMenuCommand);
         BasicCommand startGameCommand = new StartGameCommand();
@@ -73,7 +75,7 @@ public final class CustomGamemodes extends JavaPlugin {
 
     private void registerListener(){
         getServer().getPluginManager().registerEvents(new CheckForceItemListener(), plugin);
-        getServer().getPluginManager().registerEvents(new GameMenuListener(), plugin);
+        getServer().getPluginManager().registerEvents(new InventoryListener(), plugin);
         getServer().getPluginManager().registerEvents(new WorldEventListener(), plugin);
     }
 

@@ -20,6 +20,7 @@ import net.kyori.adventure.util.ARGBLike;
 import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.text.MessageFormat;
@@ -96,6 +97,18 @@ public class ForceItemVisualizer {
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendActionBar(Component.text(""));
         }
+    }
+
+    public static void showTeamResult(Player p, String teamName, int score) {
+        TextComponent title = Component.text(teamName + " completed")
+                .color(TextColor.color(0, 255, 0))
+                .decorate(TextDecoration.BOLD);
+        TextComponent subtitle = Component.text(score + " rounds!")
+                .color(TextColor.color(124, 255, 0))
+                .decorate(TextDecoration.BOLD)
+                .shadowColor(ShadowColor.shadowColor(124, 194, 0, 128));
+        p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.0f);
+        p.showTitle(Title.title(title, subtitle));
     }
 
     public static String getFormattedTime(long remainingTime) {

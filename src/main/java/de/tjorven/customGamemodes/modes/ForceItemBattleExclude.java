@@ -86,7 +86,58 @@ public class ForceItemBattleExclude {
             Material.SCULK_SHRIEKER,
             Material.TURTLE_EGG,
             Material.SNOW,
-            Material.REINFORCED_DEEPSLATE
+            Material.REINFORCED_DEEPSLATE,
+            Material.DRAGON_EGG
 
     );
+
+    public static List<Material> chestExclusiveItems = List.of(
+            Material.PIGLIN_BANNER_PATTERN,
+            Material.FLOW_BANNER_PATTERN,
+            Material.GUSTER_BANNER_PATTERN,
+            Material.ENCHANTED_GOLDEN_APPLE,
+            Material.CHAINMAIL_CHESTPLATE,
+            Material.CHAINMAIL_LEGGINGS,
+            Material.CHAINMAIL_HELMET,
+            Material.CHAINMAIL_BOOTS,
+            Material.DIAMOND_HORSE_ARMOR,
+            Material.GOLDEN_HORSE_ARMOR,
+            Material.IRON_HORSE_ARMOR
+    );
+
+    public static List<Material> endExclusiveItems = new ArrayList<>(List.of(
+            Material.ELYTRA,
+            Material.DRAGON_HEAD,
+            Material.DRAGON_BREATH,
+            Material.DRAGON_WALL_HEAD,
+            Material.END_CRYSTAL,
+            Material.END_PORTAL_FRAME,
+            Material.END_STONE,
+            Material.END_STONE_BRICKS,
+            Material.CHORUS_PLANT,
+            Material.CHORUS_FLOWER,
+            Material.POPPED_CHORUS_FRUIT,
+            Material.PURPUR_BLOCK,
+            Material.PURPUR_PILLAR,
+            Material.PURPUR_SLAB,
+            Material.PURPUR_STAIRS,
+            Material.SHULKER_BOX,
+            Material.WHITE_SHULKER_BOX,
+            Material.ORANGE_SHULKER_BOX,
+            Material.MAGENTA_SHULKER_BOX,
+            Material.LIGHT_BLUE_SHULKER_BOX,
+            Material.YELLOW_SHULKER_BOX,
+            Material.LIME_SHULKER_BOX,
+            Material.PINK_SHULKER_BOX,
+            Material.GRAY_SHULKER_BOX,
+            Material.LIGHT_GRAY_SHULKER_BOX,
+            Material.CYAN_SHULKER_BOX,
+            Material.PURPLE_SHULKER_BOX,
+            Material.BLUE_SHULKER_BOX,
+            Material.BROWN_SHULKER_BOX,
+            Material.GREEN_SHULKER_BOX,
+            Material.RED_SHULKER_BOX,
+            Material.BLACK_SHULKER_BOX,
+            Material.SHULKER_SHELL
+    ));
 }
