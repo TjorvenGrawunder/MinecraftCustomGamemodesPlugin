@@ -1,7 +1,6 @@
 package de.tjorven.customGamemodes.commands;
 
-import de.tjorven.customGamemodes.exceptions.NoMoreSkipsException;
-import de.tjorven.customGamemodes.utils.SuggestionTools;
+import de.tjorven.customGamemodes.utils.CommandArguments;
 import de.tjorven.customGamemodes.utils.Team;
 import de.tjorven.customGamemodes.utils.TeamStorage;
 import io.papermc.paper.command.brigadier.BasicCommand;
@@ -9,15 +8,11 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AdminSkipCommand implements BasicCommand {
     @Override
@@ -58,6 +53,6 @@ public class AdminSkipCommand implements BasicCommand {
         List<String> teamNames = TeamStorage.getInstance().getTeams().stream().map(Team::getName).toList();
         if (args.length > 1) return List.of();
         if (args.length == 0) {return teamNames;}
-        return SuggestionTools.generateCollectionSearchSuggestions(teamNames, args[0]);
+        return CommandArguments.generateCollectionSearchSuggestions(teamNames, args[0]);
     }
 }

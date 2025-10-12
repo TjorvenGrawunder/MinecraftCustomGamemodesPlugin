@@ -1,6 +1,6 @@
 package de.tjorven.customGamemodes.commands;
 
-import de.tjorven.customGamemodes.utils.SuggestionTools;
+import de.tjorven.customGamemodes.utils.CommandArguments;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
@@ -44,6 +44,6 @@ public class JoinWorldCommand implements BasicCommand {
         List<String> worlds = p.getServer().getWorlds().stream().map(World::getName).toList();
         if (args.length == 0) return worlds;
         if (args.length > 1) return List.of();
-        return SuggestionTools.generateCollectionSearchSuggestions(worlds, args[0]);
+        return CommandArguments.generateCollectionSearchSuggestions(worlds, args[0]);
     }
 }

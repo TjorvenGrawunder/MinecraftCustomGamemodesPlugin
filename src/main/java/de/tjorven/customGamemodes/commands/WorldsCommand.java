@@ -1,12 +1,9 @@
 package de.tjorven.customGamemodes.commands;
 
-import de.tjorven.customGamemodes.CustomGamemodes;
 import de.tjorven.customGamemodes.CustomWorlds.WorldGroup;
 import de.tjorven.customGamemodes.CustomWorlds.WorldStorage;
 import de.tjorven.customGamemodes.commands.commandtree.CommandNode;
-import de.tjorven.customGamemodes.utils.SuggestionTools;
-import io.papermc.paper.command.brigadier.BasicCommand;
-import io.papermc.paper.command.brigadier.CommandSourceStack;
+import de.tjorven.customGamemodes.utils.CommandArguments;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.World;
@@ -19,10 +16,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
 import java.util.List;
-
-import static de.tjorven.customGamemodes.CustomGamemodes.plugin;
 
 public class WorldsCommand implements CommandExecutor, TabCompleter {
 
@@ -31,14 +25,8 @@ public class WorldsCommand implements CommandExecutor, TabCompleter {
     public WorldsCommand() {
         root
             .sub("create", "<world_name>", "Creates a Team", this::createWorld)
-            .sub("join", "<world_name>", "Joins a World", this::joinWorld, (sender, args) ->
-                    plugin.getServer().getWorlds().stream().map(World::getName)
-                            .filter(name -> !name.endsWith("_nether") && !name.endsWith("_the_end"))
-                            .toList())
-            .sub("delete", "<world_name>", "Deletes a World", this::deleteWorld,(sender, args) ->
-                    plugin.getServer().getWorlds().stream().map(World::getName)
-                            .filter(name -> !name.endsWith("_nether") && !name.endsWith("_the_end"))
-                            .toList());
+            .sub("join", "<world_name>", "Joins a World", this::joinWorld, CommandArguments::listWorlds)
+            .sub("delete", "<world_name>", "Deletes a World", this::deleteWorld, CommandArguments::listWorlds);
     }
 
     @Override
