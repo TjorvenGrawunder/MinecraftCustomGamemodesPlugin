@@ -47,6 +47,9 @@ public final class CustomGamemodes extends JavaPlugin {
         WorldsCommand worldsCommand = new WorldsCommand();
         getCommand("worlds").setExecutor(worldsCommand);
         getCommand("worlds").setTabCompleter(worldsCommand);
+        TeamsCommand teamsCommand = new TeamsCommand();
+        getCommand("teams").setExecutor(teamsCommand);
+        getCommand("teams").setTabCompleter(teamsCommand);
         BasicCommand openGameMenuCommand = new OpenGameMenuCommand();
         registerCommand("gamemenu", openGameMenuCommand);
         BasicCommand startGameCommand = new StartGameCommand();

@@ -15,13 +15,13 @@ public class CommandArguments {
                 .toList();
     }
 
-    public static List<String> emptySuggestions(CommandSender sender, String[] strings) {
-        return List.of();
-    }
-
     public static List<String> listWorlds(CommandSender sender, String[] strings) {
         return plugin.getServer().getWorlds().stream().map(World::getName)
                 .filter(name -> !name.endsWith("_nether") && !name.endsWith("_the_end"))
                 .toList();
+    }
+
+    public static List<String> listTeams(CommandSender sender, String[] args) {
+        return TeamStorage.getInstance().getTeams().stream().map(Team::getName).toList();
     }
 }

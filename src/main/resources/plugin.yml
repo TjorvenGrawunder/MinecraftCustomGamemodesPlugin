@@ -6,3 +6,6 @@ commands:
   worlds:
     description: World management commands
     usage: /worlds <subcommand>
+  teams:
+    description: Team Commands
+    usage: /teams <subcommand>

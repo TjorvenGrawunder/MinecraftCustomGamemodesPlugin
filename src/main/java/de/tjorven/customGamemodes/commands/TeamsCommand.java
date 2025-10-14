@@ -1,6 +1,7 @@
 package de.tjorven.customGamemodes.commands;
 
 import de.tjorven.customGamemodes.commands.commandtree.CommandNode;
+import de.tjorven.customGamemodes.utils.CommandArguments;
 import de.tjorven.customGamemodes.utils.Team;
 import de.tjorven.customGamemodes.utils.TeamStorage;
 import net.kyori.adventure.text.Component;
@@ -22,7 +23,7 @@ public class TeamsCommand implements CommandExecutor, TabCompleter {
     public TeamsCommand() {
         root
             .sub("create", "<team_name>", "Creates a Team", this::createTeam)
-            .sub("join", "<team_name>", "Joins a Team", this::joinTeam)
+            .sub("join", "<team_name>", "Joins a Team", this::joinTeam, CommandArguments::listTeams)
             .sub("leave", "", "Leaves your current Team", this::leaveTeam)
             .sub("list", "", "Lists all Teams", this::listTeams);
     }
