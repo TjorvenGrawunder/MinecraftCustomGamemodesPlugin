@@ -116,6 +116,14 @@ public class Team {
         }
     }
 
+    public void addPlayer(Player player) {
+        players.add(player);
+    }
+
+    public void removePlayer(Player player) {
+        players.remove(player);
+    }
+
     public int roundsCompleted() {
         return items.size() - 1;
     }
