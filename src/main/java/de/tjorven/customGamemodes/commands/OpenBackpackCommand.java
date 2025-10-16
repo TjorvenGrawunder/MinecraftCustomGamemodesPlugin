@@ -1,7 +1,7 @@
 package de.tjorven.customGamemodes.commands;
 
-import de.tjorven.customGamemodes.utils.Team;
-import de.tjorven.customGamemodes.utils.TeamStorage;
+import de.tjorven.customGamemodes.teams.Team;
+import de.tjorven.customGamemodes.teams.TeamStorage;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.entity.Entity;

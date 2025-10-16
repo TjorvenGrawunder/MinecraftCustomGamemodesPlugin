@@ -3,13 +3,12 @@ package de.tjorven.customGamemodes.commands;
 import de.tjorven.customGamemodes.exceptions.RoundNotOverException;
 import de.tjorven.customGamemodes.inventory.ResultsInventory;
 import de.tjorven.customGamemodes.utils.GameStorage;
-import de.tjorven.customGamemodes.utils.Team;
-import de.tjorven.customGamemodes.utils.TeamStorage;
+import de.tjorven.customGamemodes.teams.Team;
+import de.tjorven.customGamemodes.teams.TeamStorage;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 

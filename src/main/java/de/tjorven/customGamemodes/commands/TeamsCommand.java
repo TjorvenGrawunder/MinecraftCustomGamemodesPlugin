@@ -2,11 +2,10 @@ package de.tjorven.customGamemodes.commands;
 
 import de.tjorven.customGamemodes.commands.commandtree.CommandNode;
 import de.tjorven.customGamemodes.utils.CommandArguments;
-import de.tjorven.customGamemodes.utils.Team;
-import de.tjorven.customGamemodes.utils.TeamStorage;
+import de.tjorven.customGamemodes.teams.Team;
+import de.tjorven.customGamemodes.teams.TeamStorage;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

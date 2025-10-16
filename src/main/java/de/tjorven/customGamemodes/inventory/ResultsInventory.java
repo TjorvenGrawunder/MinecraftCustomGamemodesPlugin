@@ -1,11 +1,10 @@
 package de.tjorven.customGamemodes.inventory;
 
-import de.tjorven.customGamemodes.utils.ForceItemItem;
+import de.tjorven.customGamemodes.teams.taskitems.ForceItemItem;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;

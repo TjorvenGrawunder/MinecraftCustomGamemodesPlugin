@@ -1,8 +1,8 @@
 package de.tjorven.customGamemodes.commands;
 
 import de.tjorven.customGamemodes.exceptions.NoMoreSkipsException;
-import de.tjorven.customGamemodes.utils.Team;
-import de.tjorven.customGamemodes.utils.TeamStorage;
+import de.tjorven.customGamemodes.teams.Team;
+import de.tjorven.customGamemodes.teams.TeamStorage;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;

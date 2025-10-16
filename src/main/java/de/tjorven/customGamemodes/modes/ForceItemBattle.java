@@ -1,30 +1,22 @@
 package de.tjorven.customGamemodes.modes;
 
-import com.google.common.collect.ImmutableList;
 import de.tjorven.customGamemodes.CustomGamemodes;
 import de.tjorven.customGamemodes.exceptions.RoundNotOverException;
 import de.tjorven.customGamemodes.timer.GameTimer;
 import de.tjorven.customGamemodes.ui.ForceItemVisualizer;
 import de.tjorven.customGamemodes.utils.GameStorage;
-import de.tjorven.customGamemodes.utils.Team;
-import de.tjorven.customGamemodes.utils.TeamStorage;
-import io.papermc.paper.util.Tick;
+import de.tjorven.customGamemodes.teams.Team;
+import de.tjorven.customGamemodes.teams.TeamStorage;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.scheduler.BukkitTask;
 
-import java.time.Duration;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static de.tjorven.customGamemodes.modes.ForceItemBattleExclude.excludedItems;
 
 public class ForceItemBattle implements Gamemode {
     private CustomGamemodes plugin;

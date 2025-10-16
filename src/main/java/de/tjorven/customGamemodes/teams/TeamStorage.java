@@ -1,4 +1,4 @@
-package de.tjorven.customGamemodes.utils;
+package de.tjorven.customGamemodes.teams;
 
 import org.bukkit.entity.Player;
 

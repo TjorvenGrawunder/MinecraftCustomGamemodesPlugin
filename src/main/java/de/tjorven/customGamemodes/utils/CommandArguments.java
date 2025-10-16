@@ -1,5 +1,7 @@
 package de.tjorven.customGamemodes.utils;
 
+import de.tjorven.customGamemodes.teams.Team;
+import de.tjorven.customGamemodes.teams.TeamStorage;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 

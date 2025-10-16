@@ -1,9 +1,8 @@
 package de.tjorven.customGamemodes.modes;
 
-import de.tjorven.customGamemodes.CustomGamemodes;
 import de.tjorven.customGamemodes.exceptions.RoundNotOverException;
 import de.tjorven.customGamemodes.timer.GameTimer;
-import de.tjorven.customGamemodes.utils.Team;
+import de.tjorven.customGamemodes.teams.Team;
 import org.bukkit.Material;
 
 import java.util.List;
